@@ -4,18 +4,35 @@
 
 from random import randint
 
-LOWER_LIMIT = 0
-UPPER_LIMIT = 1000
+lower_limit = 0
+upper_limit = 1000
+number_attempts = 10
 
+while True:
+    num_user = int(input("загадайте число:\n"))
+    if num_user < lower_limit or num_user > upper_limit:
+        print("Введите число в диапазоне от ", lower_limit, "до ", upper_limit)
+    else:
+        break
 
-def search():
-    num = randint(LOWER_LIMIT, UPPER_LIMIT)
-    search_num = -1
-    count = 10
-    while search_num != num:
-        search_num = int(input("Угадайте число: "))
-        print([["Загаданное число меньше", "Загаданное число больше"][search_num < num], "Угадали!"][search_num == num])
-        count -= 1
-        if count == 0:
-            print("Попытки закончились")
-            break
+count = 0
+num_bot = randint(lower_limit, upper_limit)
+
+while count < number_attempts:
+    count += 1
+
+    print("попытка №", count, "от бота  число: ", num_bot)
+    if num_bot == num_user:
+        print("бот угодал число с количеством попыток: ", count)
+        break
+    elif num_bot > num_user:
+        print("загаданное число меньше")
+        upper_limit = num_bot
+        num_bot = (lower_limit + upper_limit) // 2
+    else:
+        print("загаданное число больше")
+        lower_limit = num_bot
+        num_bot = (lower_limit + upper_limit) // 2
+else:
+    print("попытки бота исчерпаны, бот не угодал число")
+    count = -1
